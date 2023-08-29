@@ -6,8 +6,14 @@
 3.      npm install
 
 ## Run lint
-    npm lint
-    npm lint:fix
+Check code  
+
+    npm run lint
+Fix code  
+
+    npm run lint:fix
 
 ## Run the application
+Vite webserver will run on localhost  
+
     npm run dev
