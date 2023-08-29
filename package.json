@@ -5,6 +5,9 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
     "test": "echo \"Error: no test specified\" && exit 1",
     "lint": "npx eslint ./src || exit 0",
     "lint:fix": "npx eslint ./src --fix || exit 0"
@@ -12,9 +15,19 @@
   "author": "Tobias Aihonen",
   "license": "MIT",
   "devDependencies": {
-    "@lnu/eslint-config": "^1.1.10"
+    "@lnu/eslint-config": "^1.1.10",
+    "vite": "^4.4.9"
   },
   "eslintConfig": {
     "extends": "@lnu"
+  },
+  "viteConfig": {
+    "export default": {
+      "root": "src",
+      "build": {
+        "outDir": "../dist",
+        "target": "esnext"
+      }
+    }
   }
 }
