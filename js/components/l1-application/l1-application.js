@@ -3,7 +3,8 @@ template.innerHTML = `
   <style>
 
   </style>
-
+  <div>
+  </div>
   <form>
     <input type="text" placeholder="Enter your name.">
     <input type="submit" value="Submit" disabled>
@@ -18,6 +19,7 @@ customElements.define('l1-application',
     #form
     #textField
     #button
+    #history
 
     /**
      * Create an instance of L1-application.
@@ -30,6 +32,8 @@ customElements.define('l1-application',
       this.#form = this.shadowRoot.querySelector('form')
       this.#textField = this.shadowRoot.querySelector('input[type="text"]')
       this.#button = this.shadowRoot.querySelector('input[type="submit"]')
+      this.#history = this.shadowRoot.querySelector('div')
+
 
 
       this.#form.addEventListener('submit', (event) => this.#submit(event))
@@ -54,7 +58,10 @@ customElements.define('l1-application',
       event.preventDefault()
 
       if (!this.#button.hasAttribute('disabled')) {
-        console.log(this.#textField.value)
+
+        const row = document.createElement('l1-row')
+        row.setAttribute('name', this.#textField.value)
+        this.#history.appendChild(row)
         this.#textField.value = ''
       }
     }
