@@ -1,12 +1,13 @@
 const template = document.createElement('template')
 template.innerHTML = `
   <style>
-    h1 {
-        color: green;
-    }
+
   </style>
 
-  <h1></h1>
+  <form>
+    <input type="text" placeholder="Enter your name.">
+    <input type="submit" value="Submit" disabled>
+  </form>
 `
 
 customElements.define('l1-application',
@@ -14,6 +15,10 @@ customElements.define('l1-application',
    * L1-application.
    */
   class extends HTMLElement {
+    #form
+    #textField
+    #button
+
     /**
      * Create an instance of L1-application.
      */
@@ -21,17 +26,37 @@ customElements.define('l1-application',
       super()
       this.attachShadow({ mode: 'open' })
         .appendChild(template.content.cloneNode(true))
-      this.displayText('Hello World')
+
+      this.#form = this.shadowRoot.querySelector('form')
+      this.#textField = this.shadowRoot.querySelector('input[type="text"]')
+      this.#button = this.shadowRoot.querySelector('input[type="submit"]')
+
+
+      this.#form.addEventListener('submit', (event) => this.#submit(event))
+      this.#textField.addEventListener('keyup', (event) => this.#validate(event))
     }
 
-    /**
-     * Display text.
-     *
-     * @param {String} text - The text to display.
-     */
-    displayText (text) {
-      const h1 = this.shadowRoot.querySelector('h1')
-      h1.textContent = text
+    connectedCallback () {
+      this.#textField.focus()
+    }
+
+    #validate (event) {
+      event.preventDefault()
+
+      if (this.#textField.value.trim().length > 0) {
+        this.#button.removeAttribute('disabled')
+      } else if (this.#textField.value.trim().length <= 0) {
+        this.#button.setAttribute('disabled', '')
+      }
+    }
+
+    #submit (event) {
+      event.preventDefault()
+
+      if (!this.#button.hasAttribute('disabled')) {
+        console.log(this.#textField.value)
+        this.#textField.value = ''
+      }
     }
   }
 )
